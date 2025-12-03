@@ -139,3 +139,44 @@ function createFeaturedProductCard() {
   productList.appendChild(card);
 
 console.log("Exercice 5 chargé ✅");
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// - créer tableau (productNames)
+let productNames = ["coloration", "shampoing", "creatine"];
+// - créer tableau (productPricesHT)
+let productPricesHT = [50, 10, 100];
+// - afficher dans la console la longueur du tableau (le nombre d'éléments à l'intérieur)
+ console.log( productNames.length);
+  
+// - définir fonction (afficherProduitsConsole()):
+function afficherProduitsConsole(params) {
+   
+//   - `Pour chaque nom dans mon tableau productNames:`
+//     (indice : il faudra récupérer l'index de chaque nom en plus. Donc on doit récupérer 2 informations.)
+productNames.forEach(element, index => {
+
+});
+//       - récupérer prix HT via `prixHT[index]`
+let priceTTC = priceHT
+//       - calculer le prix TTC (avec une fonction créée plus tôt dans nos exercices)
+
+//       - formatter prix (avec une fonction créée plus tôt dans nos exercices)
+
+//       - afficher dans la console la phrase : "Produit : Nom — Prix : XX,XX €"
+
+// - appeler la fonction
+afficherProduitsConsole();
+
+}
