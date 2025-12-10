@@ -1,10 +1,11 @@
 /*************************************************
- * EXERCICE 6 - Tableaux simples & foreach
- * Notions : tableaux simples, foreach, index,
- *           réutilisation des fonctions de prix
+ * EXERCICE 7 - Tableau d'objets & affichage DOM
+ * Notions : objets, tableau d'objets, for...of,
+ *           DOM dynamique, réutilisation fonctions
  *************************************************/
 
-/* --- Correction Exercice 1 - Variables & infos de base --- */
+/* --- Correction Exercices 1 à 6 --- */
+/* (Même base que l'exercice 6) */
 
 const shopName = "Ma Boutique JS";
 const city = "Lyon";
@@ -31,8 +32,6 @@ if (yearSpan) {
   yearSpan.textContent = new Date().getFullYear();
 }
 
-/* --- Correction Exercice 2 - Strings & messages --- */
-
 let welcomeMessage =
   "Bienvenue dans " + shopName + " située à " + city + " !";
 let welcomeMessage2 = `Bienvenue dans ${shopName} à ${city} !`;
@@ -53,21 +52,16 @@ if (cartMessageElementEx2) {
     sloganModified + ` (${sloganLength} caractères dans le slogan original)`;
 }
 
-/* --- Correction Exercice 3 - Nombres & calculs --- */
-
 let priceHTExample = 20;
 const TVA = 0.2;
 
 let priceTTCExample = priceHTExample + priceHTExample * TVA;
-
 console.log("Prix HT d'exemple :", priceHTExample);
 console.log("Prix TTC d'exemple :", priceTTCExample);
 
 let salesCount = 0;
 salesCount++;
 console.log("Nombre de ventes après incrémentation :", salesCount);
-
-/* --- Correction Exercice 4 - Fonctions de prix --- */
 
 function calculatePriceTTC(priceHT) {
   return priceHT + priceHT * TVA;
@@ -77,9 +71,11 @@ function formatPrice(price) {
   return price.toFixed(2) + " €";
 }
 
-console.log("Test TTC :", formatPrice(calculatePriceTTC(10)));
+const testPrice1 = calculatePriceTTC(10);
+const testPrice2 = calculatePriceTTC(19.99);
 
-/* --- Correction Exercice 5 - Produit vedette (DOM, sans objets) --- */
+console.log("Test 1 TTC formaté :", formatPrice(testPrice1));
+console.log("Test 2 TTC formaté :", formatPrice(testPrice2));
 
 let featuredProductName = "T-shirt Code & Chill";
 let featuredProductPriceHT = 19.99;
@@ -95,15 +91,20 @@ function createFeaturedProductCard() {
   const img = document.createElement("img");
   img.src = featuredProductImage;
   img.alt = featuredProductName;
+  img.classList.add("product-image");
 
   const title = document.createElement("h3");
   title.textContent = featuredProductName;
+  title.classList.add("product-title");
 
   const priceElt = document.createElement("p");
-  priceElt.textContent = formatPrice(calculatePriceTTC(featuredProductPriceHT));
+  const priceTTC = calculatePriceTTC(featuredProductPriceHT);
+  priceElt.textContent = formatPrice(priceTTC);
+  priceElt.classList.add("product-price");
 
   const desc = document.createElement("p");
   desc.textContent = featuredProductDescription;
+  desc.classList.add("product-description");
 
   article.appendChild(img);
   article.appendChild(title);
@@ -115,43 +116,98 @@ function createFeaturedProductCard() {
 
 if (productList) {
   productList.innerHTML = "";
-  productList.appendChild(createFeaturedProductCard());
+  const card = createFeaturedProductCard();
+  productList.appendChild(card);
 }
 
-/* --- Nouveautés Exercice 6 - foreach sur tableaux simples --- */
-
-// 1) Deux tableaux synchronisés
 const productNames = ["T-shirt JS", "Mug Debug", "Sticker Bug Free"];
 const productPricesHT = [19.99, 9.99, 2.5];
 
 console.log("Nombre de produits :", productNames.length);
 
-// 2) Fonction d'affichage console
 function displayProductsInConsole() {
-  productNames.forEach((name, index) => {
-    const priceHT = productPricesHT[index];
+  for (let i = 0; i < productNames.length; i++) {
+    const name = productNames[i];
+    const priceHT = productPricesHT[i];
     const priceTTC = calculatePriceTTC(priceHT);
     const formattedPrice = formatPrice(priceTTC);
 
-    console.log(`${index + 1} - ${name} — ${formattedPrice} TTC`);
-  });
+    console.log(`${i + 1} - ${name} — ${formattedPrice} TTC`);
+  }
 }
 
 displayProductsInConsole();
 
-console.log("Exercice 6 chargé ✅");
+/* --- Nouveautés Exercice 7 --- */
+/* Tableau d'objets & affichage DOM de tous les produits */
 
+const products = [
+  {
+    id: 1,
+    name: "T-shirt JS",
+    priceHT: 19.99,
+    description: "T-shirt confortable pour développeurs JavaScript.",
+    image: "https://images.unsplash.com/photo-1561347981-969c80cf4463?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+  },
+  {
+    id: 2,
+    name: "Mug Debug",
+    priceHT: 9.99,
+    description: "Mug pour déboguer avec du café ☕.",
+    image: "https://images.unsplash.com/photo-1639755507638-e34150b56db2?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+  },
+  {
+    id: 3,
+    name: "Sticker Bug Free",
+    priceHT: 2.5,
+    description: "Un sticker pour célébrer les bugs corrigés.",
+    image: "https://images.unsplash.com/photo-1662389943678-df7f58b730e8?q=80&w=1471&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+  }
+];
 
+const productListSection = document.getElementById("product-list");
 
+function createProductCard(product) {
+  const article = document.createElement("article");
+  article.classList.add("product-card");
 
+  const img = document.createElement("img");
+  img.src = product.image;
+  img.alt = product.name;
+  img.classList.add("product-image");
 
+  const title = document.createElement("h3");
+  title.textContent = product.name;
+  title.classList.add("product-title");
 
+  const priceElt = document.createElement("p");
+  const priceTTC = calculatePriceTTC(product.priceHT);
+  priceElt.textContent = formatPrice(priceTTC);
+  priceElt.classList.add("product-price");
 
+  const desc = document.createElement("p");
+  desc.textContent = product.description;
+  desc.classList.add("product-description");
 
+  article.appendChild(img);
+  article.appendChild(title);
+  article.appendChild(priceElt);
+  article.appendChild(desc);
 
+  return article;
+}
 
+function displayProductsInPage() {
+  if (!productListSection) return;
 
+  productListSection.innerHTML = "";
 
+  for (const product of products) {
+    const card = createProductCard(product);
+    productListSection.appendChild(card);
+  }
+}
 
+displayProductsInPage();
 
-
+console.log("Exercice 7 chargé ✅");
