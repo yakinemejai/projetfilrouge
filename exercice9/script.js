@@ -333,7 +333,7 @@ function createProductCard(product) {
   article.appendChild(button);
 
   return article;
-}
+}   
 
 /**
  * 4) Réutiliser displayProductsInPage()
